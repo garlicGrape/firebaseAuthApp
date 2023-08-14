@@ -10,7 +10,7 @@ const router = express.Router();
 
 // Regular user routes
 router.get('/signup', (req, res) => {
-  res.render('signup'); // Renders the 'signup.ejs' template
+  res.render('/signup', {path: '/signup'}); // Renders the 'signup.ejs' template
 });
 
 router.post('/signup', async (req, res) => {
@@ -32,15 +32,13 @@ router.post('/signup', async (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-  res.render('login'); // Renders the 'login.ejs' template
+  res.render('login', {path: '/login'}); // Renders the 'login.ejs' template
 });
 
 router.post('/login', async (req, res) => {
   try {
     // Perform user login logic
-    // Example: verify user credentials and generate JWT token
-    // Note: This is a simplified example. Implement actual login logic here.
-
+   
     // Generate JWT token
     const token = jwt.sign({ uid: 'user_id', email: req.body.email }, process.env.JWT_SECRET);
     res.send(token);
