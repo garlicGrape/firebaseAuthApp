@@ -32,6 +32,7 @@ router.post('/signup', async (req, res) => {
 });
 
 router.get('/login', (req, res) => {
+  const { email, password } = req.body;
   res.render('login', {path: '/login'}); // Renders the 'login.ejs' template
 });
 
