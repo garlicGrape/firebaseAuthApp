@@ -23,7 +23,7 @@ const verifyAdminToken = (req, res, next) => {
 };
 
 // Admin CMS routes
-router.get('/users', verifyAdminToken, async (req, res) => {
+router.get('/users', verifyAdminToken, async (req, res, next) => {
   try {
     // Fetch a list of users (for admin use only)
     const userList = await admin.auth().listUsers();

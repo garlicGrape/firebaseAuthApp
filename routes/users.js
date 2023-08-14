@@ -9,11 +9,11 @@ const router = express.Router();
 // ... (other imports and middleware)
 
 // Regular user routes
-router.get('/signup', (req, res) => {
+router.get('/signup', (req, res, next) => {
   res.render('/signup', {path: '/signup'}); // Renders the 'signup.ejs' template
 });
 
-router.post('/signup', async (req, res) => {
+router.post('/signup', async (req, res, next) => {
   try {
     // Perform user signup, assign group code, etc.
     // Example: create user in Firebase Auth and generate group code
@@ -31,12 +31,12 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-router.get('/login', (req, res) => {
+router.get('/login', (req, res, next) => {
   const { email, password } = req.body;
   res.render('login', {path: '/login'}); // Renders the 'login.ejs' template
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', async (req, res, next) => {
   try {
     // Perform user login logic
    
