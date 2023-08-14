@@ -10,43 +10,42 @@ const router = express.Router();
 
 // Regular user routes
 router.get('/signup', (req, res, next) => {
-  res.render('/signup', {path: '/signup'}); // Renders the 'signup.ejs' template
+  res.render('signup', {path: '/signup'}); // Renders the 'signup.ejs' template
 });
 
-router.post('/signup', async (req, res, next) => {
-  try {
-    // Perform user signup, assign group code, etc.
-    // Example: create user in Firebase Auth and generate group code
-    const groupCode = uuid.v4();
-    const user = await admin.auth().createUser({
-      email: req.body.email,
-      password: req.body.password,
-    });
+// router.post('/signup', async (req, res, next) => {
+//   try {
+//     // Perform user signup, assign group code, etc.
+//     // Example: create user in Firebase Auth and generate group code
+//     const groupCode = uuid.v4();
+//     const user = await admin.auth().createUser({
+//       email: req.body.email,
+//       password: req.body.password,
+//     });
 
-    // Generate JWT token
-    const token = jwt.sign({ uid: user.uid, email: user.email, groupCode }, process.env.JWT_SECRET);
-    res.send(token);
-  } catch (error) {
-    res.status(400).send(error.message);
-  }
-});
+//     // Generate JWT token
+//     const token = jwt.sign({ uid: user.uid, email: user.email, groupCode }, process.env.JWT_SECRET);
+//     res.send(token);
+//   } catch (error) {
+//     res.status(400).send(error.message);
+//   }
+// });
 
 router.get('/login', (req, res, next) => {
-  const { email, password } = req.body;
   res.render('login', {path: '/login'}); // Renders the 'login.ejs' template
 });
 
-router.post('/login', async (req, res, next) => {
-  try {
-    // Perform user login logic
+// router.post('/login', async (req, res, next) => {
+//   try {
+//     // Perform user login logic
    
-    // Generate JWT token
-    const token = jwt.sign({ uid: 'user_id', email: req.body.email }, process.env.JWT_SECRET);
-    res.send(token);
-  } catch (error) {
-    res.status(400).send(error.message);
-  }
-});
+//     // Generate JWT token
+//     const token = jwt.sign({ uid: 'user_id', email: req.body.email }, process.env.JWT_SECRET);
+//     res.send(token);
+//   } catch (error) {
+//     res.status(400).send(error.message);
+//   }
+// });
 
 // ... (other routes)
 

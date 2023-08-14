@@ -30,7 +30,7 @@ const serviceAccount = {
   });
 
 const app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
@@ -53,16 +53,6 @@ const verifyToken = (req, res, next) => {
   };
   
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-  .then(() => console.log('Connected to MongoDB'))
-  .catch((err) => console.error('Error connecting to MongoDB:', err));
-
-
-
 // Use the routes from separate files
 const adminRoutes = require('./routes/admin');
 const userRoutes = require('./routes/users');
@@ -71,7 +61,16 @@ const userRoutes = require('./routes/users');
 app.use('/admin', verifyToken, adminRoutes); // Apply verifyToken middleware for admin routes
 app.use('/users', verifyToken, userRoutes); // Apply verifyToken middleware for user routes
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+  .then(() => {
+    console.log('Connected to MongoDB')
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
+  })
+  .catch((err) => console.error('Error connecting to MongoDB:', err));
