@@ -10,7 +10,7 @@ const router = express.Router();
 
 // Regular user routes
 router.get('/signup', (req, res, next) => {
-  res.render('signup', {path: '/signup'}); // Renders the 'signup.ejs' template
+  res.render('signup', {}); // Renders the 'signup.ejs' template
 });
 
 // router.post('/signup', async (req, res, next) => {
@@ -32,7 +32,7 @@ router.get('/signup', (req, res, next) => {
 // });
 
 router.get('/login', (req, res, next) => {
-  res.render('login', {path: '/login'}); // Renders the 'login.ejs' template
+  res.render('login', {}); // Renders the 'login.ejs' template
 });
 
 // router.post('/login', async (req, res, next) => {

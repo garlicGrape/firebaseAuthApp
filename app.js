@@ -29,14 +29,17 @@ const serviceAccount = {
     databaseURL: process.env.FIREBASE_DATABASE_URL,
   });
 
+
+
 const app = express();
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
 // Set up EJS as the view engine
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+//app.set('views', path.join(__dirname, 'views'));
+app.set('views', 'views');
 
 // Middleware to verify JWT token
 const verifyToken = (req, res, next) => {
@@ -58,8 +61,11 @@ const adminRoutes = require('./routes/admin');
 const userRoutes = require('./routes/users');
 
 // Mount the routes with authentication
-app.use('/admin', verifyToken, adminRoutes); // Apply verifyToken middleware for admin routes
-app.use('/users', verifyToken, userRoutes); // Apply verifyToken middleware for user routes
+//app.use('/admin', verifyToken, adminRoutes); // Apply verifyToken middleware for admin routes
+//app.use('/users', verifyToken, userRoutes); // Apply verifyToken middleware for user routes
+
+app.use('/admin', adminRoutes); // Apply verifyToken middleware for admin routes
+app.use('/users',  userRoutes); // Apply verifyToken middleware for user routes
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
@@ -74,3 +80,12 @@ mongoose.connect(process.env.MONGO_URI, {
 });
   })
   .catch((err) => console.error('Error connecting to MongoDB:', err));
+
+// mongoose
+//   .connect(MONGO_URI)
+//   .then(result => {
+//     app.listen(3000);
+//   })
+//   .catch(err => {
+//     console.log(err);
+//   });
