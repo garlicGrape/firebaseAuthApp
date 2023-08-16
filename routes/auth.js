@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 const uuid = require('uuid');
 const path = require('path'); // Import path module
 
+const authController = require('../controllers/auth');
+
 const router = express.Router();
 
 // ... (other imports and middleware)
@@ -12,6 +14,8 @@ const router = express.Router();
 router.get('/signup', (req, res, next) => {
   res.render('signup', {}); // Renders the 'signup.ejs' template
 });
+
+router.post('/signup', authController.postSignup);
 
 // router.post('/signup', async (req, res, next) => {
 //   try {

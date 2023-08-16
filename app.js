@@ -58,14 +58,14 @@ const verifyToken = (req, res, next) => {
 
 // Use the routes from separate files
 const adminRoutes = require('./routes/admin');
-const userRoutes = require('./routes/users');
+const authRoutes = require('./routes/auth');
 
 // Mount the routes with authentication
 //app.use('/admin', verifyToken, adminRoutes); // Apply verifyToken middleware for admin routes
 //app.use('/users', verifyToken, userRoutes); // Apply verifyToken middleware for user routes
 
-app.use('/admin', adminRoutes); // Apply verifyToken middleware for admin routes
-app.use('/users',  userRoutes); // Apply verifyToken middleware for user routes
+app.use('/admin', adminRoutes); // Apply admin routes
+app.use(authRoutes); // Apply auth routes
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
