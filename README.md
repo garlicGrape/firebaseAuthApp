@@ -1,4 +1,4 @@
-<u>NPM Packages to be used</u>
+<ins>NPM Packages to be used</ins>
 
 1.	Firebase-admin
         This is to be able to interact with firebase from the node js backend
@@ -32,3 +32,8 @@
 
 10. Bcrypt 
         This will be used in order to hash passwords stored in the database and keep them secure. 
+
+
+
+
+In order for the project to work you will need the .env file. 
