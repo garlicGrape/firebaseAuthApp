@@ -39,6 +39,8 @@ router.get('/login', (req, res, next) => {
   res.render('login', {}); // Renders the 'login.ejs' template
 });
 
+router.post('/login', authController.postLogin);
+
 // router.post('/login', async (req, res, next) => {
 //   try {
 //     // Perform user login logic

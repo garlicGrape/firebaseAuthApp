@@ -38,3 +38,26 @@ exports.postSignup = async (req, res, next) => {
             console.log(err);
         })
 };
+
+exports.postLogin = async (req, res, next) => {
+    const email = req.body.email;
+    const password = req.body.password; 
+
+    User.findOne({email: email})
+    .then(user => {
+        if (!user) {
+            return res.status(422).redirect('/login');
+        }
+        bcrypt
+            .compare(password, user.password)
+            .then(doMatch => {
+                if (doMatch) {
+                    const token = jwt.sign({ uid: 'user_id', email: req.body.email }, process.env.JWT_SECRET);
+                    res.send(token);
+                }
+            })
+        })
+    .catch(err => {
+        console.log(err);
+    })
+};
