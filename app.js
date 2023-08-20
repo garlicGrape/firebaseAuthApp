@@ -1,6 +1,7 @@
 const express = require('express');
 const admin = require('firebase-admin');
 const bodyParser = require('body-parser');
+const jsonParser = bodyParser.json();
 const cors = require('cors');
 const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
@@ -32,7 +33,8 @@ const serviceAccount = {
 
 
 const app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(jsonParser);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
