@@ -57,6 +57,6 @@ router.post('/login', authController.postLogin);
 
 // ... (other routes)
 
-router.post('/joinGroup', verifyToken, authController.postJoinGroup);
+router.post('/joinGroup', authController.postJoinGroup);
 
 module.exports = router;

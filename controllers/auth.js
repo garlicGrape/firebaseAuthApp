@@ -162,7 +162,36 @@ exports.postSignup =  (req, res, next) => {
   
   };
   
-  exports.postJoinGroup = (req, res, next) => {
+  exports.postJoinGroup = async (req, res, next) => {
+    let idToken;
+
+    if( req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+      idToken = req.headers.authorization.split(' ')[1]
+    }
+
+    console.log(idToken);
+
+    try {
+      const decodedToken = await admin.auth().verifyIdToken(idToken);
+      // const decodedToken = jwt.verify(idToken, process.env.JWT_SECRET);
+      // req.user = decodedToken;
+      const email = decodedToken.email;
+      const  user = await User.findOne({email: email});
+      
+     await user.updateOne({role: 'user'});
+      
+      if (!user) {
+        return res.status(401).json({ success: false, message: 'User not found' });
+      }
+  
+      // console.log("Decoded data: ");
+      // console.log(decodedToken);
+      next();
+    } catch (ex) {
+      res.status(400).send('Invalid token.');
+      console.log(ex);
+    }
+  
     
   };
   
