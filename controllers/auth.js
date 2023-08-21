@@ -113,7 +113,7 @@ exports.postSignup =  (req, res, next) => {
     
     // Create a new user document in MongoDB with the generated UID, email, first name, and last name
     console.log("Creating  user");
-    const newUser = new User({email: email, firstname: firstname, lastname: lastname});
+    const newUser = new User({email: email, firstname: firstname, lastname: lastname, groupCode: 4444});
     console.log("Done");
     return newUser.save();
   
@@ -125,7 +125,7 @@ exports.postSignup =  (req, res, next) => {
   
   
   exports.postLogin = async (req, res, next) => {
-    const idToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjYzODBlZjEyZjk1ZjkxNmNhZDdhNGNlMzg4ZDJjMmMzYzIzMDJmZGUiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoic2tnYW1pbWdAZ21haWwuY29tIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL2Zpci1hdXRoYXBwLWVmYTdkIiwiYXVkIjoiZmlyLWF1dGhhcHAtZWZhN2QiLCJhdXRoX3RpbWUiOjE2OTIzODU4MzQsInVzZXJfaWQiOiJqU0lwdkI0NEpVTVJXa2NVdndIMTcyamlUdDYzIiwic3ViIjoialNJcHZCNDRKVU1SV2tjVXZ3SDE3MmppVHQ2MyIsImlhdCI6MTY5MjM4NTgzNCwiZXhwIjoxNjkyMzg5NDM0LCJlbWFpbCI6InNrZ2FtaW1nQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJza2dhbWltZ0BnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.NSVmEFjbqILPD26Lw1OeNMMjMeJisG_UPq14qnOd4dAOhhoZumMC73xn6MZ0PiRpHqjwP7dN4-SDt8djUuJQksKO-2gZgBH261gBeEnKmHcRdDnh7d3VMAJLr6qE_aymBVCwDIJoQZtstcudQjLUotjWJDZAPj7xQJkcL-V4e7EkPWPVDV0JH2NVDWWpvVtxWYWO5sl4Ku6eqP7ob-VlxrV_knRddflSi1Jjykc95xMtXC6WVyf9GyiEaCezpgjq2F3X7vW1uSPJVqNWuBZDg7bDL3pLCacdvt2osNAgViNSwDC5nWlsS9DZQMn5M9audlTpyHR6qyr3pffvZk2-Fw";
+    const idToken = req.header('Authorization');
 
     console.log("This is the token:" + idToken);
   
@@ -151,7 +151,9 @@ exports.postSignup =  (req, res, next) => {
     }
   };
   
-  
+  exports.postJoinGroup = (req, res, next) => {
+    
+  };
   
   
   

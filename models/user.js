@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
   firstname: { type: String, required: false},
   lastname: { type: String, required: false},
   groupCode: { type: String, required: false },
+  role: { type: String, required: false}
   // ... other user-specific fields
 });
 
