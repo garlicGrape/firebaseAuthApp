@@ -2,6 +2,7 @@ const User = require('../models/user');
 const uuid = require('uuid');
 const jwt = require("jsonwebtoken");
 const admin = require('firebase-admin');
+const dotenv = require('dotenv');
 
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
@@ -122,21 +123,26 @@ exports.postSignup =  (req, res, next) => {
   
 
 
-  
-  
   exports.postLogin = async (req, res, next) => {
-    const idToken = req.header('Authorization');
+    let idToken;
 
-    console.log("This is the token:" + idToken);
-  
+    if( req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+      idToken = req.headers.authorization.split(' ')[1]
+    }
+    
+    // const idToken = req.header('Authorization');
+
+    // console.log(idToken);
+
+    
     try {
-      // Verify the ID token using Firebase Admin SDK
       const decodedToken = await admin.auth().verifyIdToken(idToken);
-      const uid = decodedToken.uid;
-  
-      // Find the user in your MongoDB database by UID
-      const user = await User.findOne({ uid: uid });
-  
+      // const decodedToken = jwt.verify(idToken, process.env.JWT_SECRET);
+      // req.user = decodedToken;
+      const email = decodedToken.email;
+      const  user = await User.findOne({email: email});
+      console.log(user);
+
       if (!user) {
         return res.status(401).json({ success: false, message: 'User not found' });
       }
@@ -145,10 +151,15 @@ exports.postSignup =  (req, res, next) => {
         success: true,
         message: 'Login successful',
       });
-    } catch (error) {
-      console.error('Error verifying ID token:', error);
-      res.status(500).json({ success: false, message: 'Verification error' });
+
+      console.log("Decoded data: ");
+      console.log(decodedToken);
+      next();
+    } catch (ex) {
+      res.status(400).send('Invalid token.');
+      console.log(ex);
     }
+  
   };
   
   exports.postJoinGroup = (req, res, next) => {
