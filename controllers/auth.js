@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Groupcode = require('../models/groupcode');
 const uuid = require('uuid');
 const jwt = require("jsonwebtoken");
 const admin = require('firebase-admin');
@@ -217,11 +218,23 @@ exports.postSignup =  (req, res, next) => {
       const decodedToken = await admin.auth().verifyIdToken(idToken);
       // const decodedToken = jwt.verify(idToken, process.env.JWT_SECRET);
       // req.user = decodedToken;
-      const email = decodedToken.email;
+      const email = decodedToken.email.trim();
+
+      console.log("This is the email:" + email);
       const  user = await User.findOne({email: email});
+      console.log("This is the updated user: " + user);
       
      await user.updateOne({role: 'user'});
-      
+     console.log("Creating  groupcode");
+
+     const gc = await Groupcode.findOne({groupCode: 4444});
+
+     if(!gc) {
+      const groupCode = new Groupcode({groupCode: 4444, role: user.role});
+      await groupCode.save();
+      console.log("Done");
+     } 
+    
       if (!user) {
         return res.status(401).json({ success: false, message: 'User not found' });
       }
