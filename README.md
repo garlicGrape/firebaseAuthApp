@@ -12,10 +12,7 @@ This project utilizes the following NPM packages to create a robust authenticati
 - [Jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken): Enables the generation and verification of JSON Web Tokens (JWTs) for secure authentication.
 - [Body-parser](https://www.npmjs.com/package/body-parser): Middleware to parse incoming request bodies in Express routes, facilitating data handling.
 - [Dotenv](https://www.npmjs.com/package/dotenv): Allows loading environment variables from a `.env` file to safeguard sensitive database information.
-- [Uuid](https://www.npmjs.com/package/uuid): Provides tools for generating unique identifiers, essential for creating group codes.
-- [Ejs](https://www.npmjs.com/package/ejs): Enables the use of Embedded JavaScript (EJS) for view rendering, particularly useful for login and signup pages.
 - [Mongoose](https://www.npmjs.com/package/mongoose): Facilitates schema creation for MongoDB, automating data population for users and admins.
-- [Bcrypt](https://www.npmjs.com/package/bcrypt): Ensures password security by hashing stored passwords, enhancing overall system safety.
 
 ## Getting Started
 

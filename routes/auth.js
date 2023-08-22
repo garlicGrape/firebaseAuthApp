@@ -1,11 +1,5 @@
 const express = require('express');
 
-
-
-const path = require('path'); // Import path module
-
-const verifyToken = require('../middleware/verifyToken');
-
 const authController = require('../controllers/auth');
 
 const router = express.Router();

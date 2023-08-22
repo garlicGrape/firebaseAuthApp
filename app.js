@@ -38,18 +38,9 @@ app.use(jsonParser);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
-// Set up EJS as the view engine
-app.set('view engine', 'ejs');
-//app.set('views', path.join(__dirname, 'views'));
-app.set('views', 'views');
-
 // Use the routes from separate files
 const adminRoutes = require('./routes/admin');
 const authRoutes = require('./routes/auth');
-
-// Mount the routes with authentication
-//app.use('/admin', verifyToken, adminRoutes); // Apply verifyToken middleware for admin routes
-//app.use('/users', verifyToken, userRoutes); // Apply verifyToken middleware for user routes
 
 app.use('/admin', adminRoutes); // Apply admin routes
 app.use(authRoutes); // Apply auth routes
@@ -68,11 +59,3 @@ mongoose.connect(process.env.MONGO_URI, {
   })
   .catch((err) => console.error('Error connecting to MongoDB:', err));
 
-// mongoose
-//   .connect(MONGO_URI)
-//   .then(result => {
-//     app.listen(3000);
-//   })
-//   .catch(err => {
-//     console.log(err);
-//   });
