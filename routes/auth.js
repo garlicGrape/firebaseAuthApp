@@ -1,7 +1,7 @@
 const express = require('express');
-const admin = require('firebase-admin');
-const jwt = require('jsonwebtoken');
-const uuid = require('uuid');
+
+
+
 const path = require('path'); // Import path module
 
 const verifyToken = require('../middleware/verifyToken');
@@ -17,5 +17,7 @@ router.post('/signup', authController.postSignup);
 router.post('/login', authController.postLogin);
 
 router.post('/joinGroup', authController.postJoinGroup);
+
+router.put('/updateUser', authController.putUpdateUser);
 
 module.exports = router;

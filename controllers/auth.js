@@ -123,6 +123,47 @@ exports.postSignup =  (req, res, next) => {
   
 
 
+  exports.putUpdateUser = async (req, res, next) => {
+    let idToken;
+
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+    idToken = req.headers.authorization.split(' ')[1]
+  }
+
+  console.log(idToken);
+
+  try {
+    const decodedToken = await admin.auth().verifyIdToken(idToken);
+    const email = decodedToken.email;
+    const user = await User.findOne({ email: email });
+
+    if (!user) {
+      return res.status(401).json({ success: false, message: 'User not found' });
+    }
+
+    if (req.body.firstname && req.body.lastname) {
+      await user.updateOne({
+        firstname: req.body.firstname,
+        lastname: req.body.lastname
+      });
+
+      res.json({
+        success: true,
+        message: 'Name update successful',
+        user: user
+      });
+    } else {
+      res.status(400).json({ success: false, message: 'Missing firstname or lastname in request body' });
+    }
+
+    next();
+  } catch (ex) {
+    res.status(400).send('Invalid token.');
+    console.log(ex);
+  }
+
+  };
+
   exports.postLogin = async (req, res, next) => {
     let idToken;
 
@@ -150,6 +191,7 @@ exports.postSignup =  (req, res, next) => {
       res.json({
         success: true,
         message: 'Login successful',
+        user: user
       });
 
       console.log("Decoded data: ");
@@ -183,6 +225,12 @@ exports.postSignup =  (req, res, next) => {
       if (!user) {
         return res.status(401).json({ success: false, message: 'User not found' });
       }
+
+      res.json({
+        success: true,
+        message: 'Role update successful',
+        user: user
+      });
   
       // console.log("Decoded data: ");
       // console.log(decodedToken);
